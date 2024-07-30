@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const { connectDB, sequelize } = require('./db/db');
+const { connectDB, sequelize } = require('./database/db');
 const Product = require('./models/Product');
 
 const app = express();
@@ -10,20 +10,20 @@ const PORT = process.env.PORT || 3000;
 connectDB();
 
 // Sincronizar modelos con la base de datos
-// Nota: force: true en sequelize.sync eliminará y volverá a crear 
-// las tablas cada vez que se inicie el servidor. Usa force: false en un entorno de producción.
 sequelize.sync({ force: true }).then(() => {
     console.log('Base de datos y modelos sincronizados.');
 });
 
-
+// Configurar EJS como motor de plantillas
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '..', 'views'));
 
 // Middleware para servir archivos estáticos
 app.use(express.static(path.join(__dirname, '..')));
 
 // Ruta principal
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'index.html'));
+    res.render('index', { title: 'E-commerce de Computación' });
 });
 
 app.listen(PORT, () => {
