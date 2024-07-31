@@ -1,8 +1,6 @@
 const express = require('express');
 const path = require('path');
 const { connectDB, sequelize } = require('./database/db');
-const Product = require('./models/Product');
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -16,14 +14,14 @@ sequelize.sync({ force: true }).then(() => {
 
 // Configurar EJS como motor de plantillas
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '..', 'views'));
+app.set('views', path.join(__dirname, '../views'));
 
 // Middleware para servir archivos estáticos
 app.use(express.static(path.join(__dirname, '..')));
 
 // Ruta principal
 app.get('/', (req, res) => {
-    res.render('index', { title: 'E-commerce de Computación' });
+    res.render('index', { title: 'ndkfs' });
 });
 
 app.listen(PORT, () => {
